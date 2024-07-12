@@ -15,8 +15,10 @@ import authentication.jong.DTO.LoginDto;
 import authentication.jong.DTO.MemberDto;
 import authentication.jong.DTO.SignUpDto;
 import authentication.jong.DTO.TokenDto;
+import authentication.jong.Entity.Member;
 import authentication.jong.Jwt.JwtTokenProvider;
 import authentication.jong.repository.MemberRepository;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,16 +47,18 @@ public class MemberServiceImpl implements MemberService{
         return tokenDTO;
     }
 
+    @Transactional
     @Override
     public MemberDto signUp(SignUpDto signUpDto) {
-        //이름 중복(아마 프론트에서 해줄거임)
+        //이름 중복(아마 다른 메소드를 만들어서 사용할 듯)
         // if(memberRepository.findByEmail(signUpDto.getEmail()).isPresent()){
-        //     throw new IllegalArgumentException("이미 사용 중인 사용자 이름입니다.");
+        //     throw new IllegalArgumentException("이미 사용 중인 사용자 이메일입니다.");
         // }
 
         //비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
-        return MemberDto.toDto(memberRepository.save(signUpDto.toEntity(encodedPassword, signUpDto.getAccountType())));
+        Member member = signUpDto.toEntity(encodedPassword, signUpDto.getAccountType());
+        return MemberDto.toDto(memberRepository.save(member));
     }
 
     

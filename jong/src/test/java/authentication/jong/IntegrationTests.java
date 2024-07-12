@@ -54,10 +54,10 @@ public class IntegrationTests {
             .registrationData(now).build();
     }
 
-    @AfterEach
-    void afterEach(){
-        databaseCleanUp.truncateAllEntity();
-    }
+    // @AfterEach
+    // void afterEach(){
+    //     databaseCleanUp.truncateAllEntity();
+    // }
 
     @Test
     public void signUpTest(){
@@ -94,7 +94,7 @@ public class IntegrationTests {
         String url = "http://localhost:" + randomServerPort + "/member/test";
         ResponseEntity<String> responseEntity = testRestTemplate.postForEntity(url, new HttpEntity<>(httpHeaders), String.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isEqualTo(loginDto.getEmail());
+        assertThat(responseEntity.getBody()).isEqualTo("success");
     }    
 
     

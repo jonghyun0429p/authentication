@@ -32,7 +32,7 @@ public class SecurityConfig {
         //로그인은 모두 허가
         .requestMatchers("/member/login").permitAll()
         //test API는 로그인한 사람만 허가
-        .requestMatchers("/member/test").hasAnyRole("0","1","2","3")
+        .requestMatchers("/member/test").hasAnyRole("0","1","2")
         .requestMatchers("/member/signup").permitAll()
         //나머지 모두는 로그인해야 가능
         .anyRequest().authenticated()
